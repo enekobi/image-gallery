@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 const ImageWrapper = styled.div`
+  display: inline-block; // workaround for IE11 responsiveness
   margin: 5px;
   position: relative;
 
