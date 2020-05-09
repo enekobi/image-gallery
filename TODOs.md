@@ -7,3 +7,4 @@
 - Typing (PropTypes vs Typescript)
 - Improve paths (index entry-points, aliases, ...)
 - useMemo for thumbnails?
+- check autoprefixer configuration
