@@ -331,9 +331,9 @@ module.exports = function (webpackEnv) {
                             '@svgr/webpack?-svgo,+titleProp,+ref![path]'
                         }
                       }
-                    },
-                    require.resolve('babel-plugin-styled-components')
-                  ]
+                    }
+                  ],
+                  require.resolve('babel-plugin-styled-components')
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
