@@ -2,3 +2,5 @@
 
 - React Helmet
 - Redux-saga-test-plan
+- Cleaning
+- Typing (PropTypes vs Typescript)
