@@ -47,7 +47,4 @@ export const Thumbnail = (props) => (
       <label>{props.title.toUpperCase()}</label>
     </div>
   </ImageWrapper>
-  // <div className="thumbnail__title">
-  //   <span>{props.title}</span>
-  // </div>
 );
