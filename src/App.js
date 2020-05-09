@@ -1,5 +1,5 @@
 import React from 'react';
-import { Theme } from './styles/Theme';
+import { Theme } from './components/styles/Theme';
 import { Gallery } from './components/Pages/Gallery';
 
 function App() {
