@@ -1,5 +1,6 @@
 # Gimme stuff
 
+- Better use of theme
 - React Helmet
 - Redux-saga-test-plan
 - Cleaning
