@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const ImageWrapper = styled.div`
-  display: inline-block; // workaround for IE11 responsiveness
+  display: inline-block; // workaround for IE11
   margin: 5px;
   position: relative;
   cursor: pointer;
-  
+
   .thumbnail {
     height: 100%;
     width: 100%;
@@ -23,10 +23,10 @@ const ImageWrapper = styled.div`
     margin: auto;
     height: 90%;
     width: 95%;
-    
-    opacity: 0;    
+
+    opacity: 0;
     transition: 0.6s ease;
-  
+
     label {
       text-transform: uppercase;
       justify-self: center;
@@ -34,18 +34,21 @@ const ImageWrapper = styled.div`
     }
   }
 
-  :hover{
-    .thumbnail__title{
+  :hover {
+    .thumbnail__title {
       opacity: 0.8;
     }
   }
 `;
 
-
-
 export const Thumbnail = (props) => (
   <ImageWrapper onClick={props.navigate}>
-    <img className="thumbnail" src={props.src} loading="lazy" alt={props.title} />
+    <img
+      className="thumbnail"
+      src={props.src}
+      loading="lazy"
+      alt={props.title}
+    />
     <div className="thumbnail__title">
       <label>{props.title}</label>
     </div>
