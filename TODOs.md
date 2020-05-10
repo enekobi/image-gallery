@@ -9,3 +9,4 @@
 - useMemo for thumbnails?
 - check autoprefixer configuration
 - review navigation (flex structure, componentization, ...)
+- stop infinite scroll when navigation

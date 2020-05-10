@@ -36,7 +36,7 @@ export const Gallery = (props) => {
       <Grid className="page__content">
         {props.images.map((itemProps, index) => {
           const src = itemProps.images.fixed_width.url;
-          return <ThumbnailContainer src={src} key={index} {...itemProps} />
+          return <ThumbnailContainer src={src} index={index} key={itemProps.id} {...itemProps} />
         })}
       </Grid>
       <LoadMoreContainer />

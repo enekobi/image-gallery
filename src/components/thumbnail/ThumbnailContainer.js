@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
 import { Thumbnail } from './Thumbnail';
-import { toggleNavigation } from '../../store/actions';
+import { setCurrent, toggleNavigation } from '../../store/actions';
 
-const mapDispatchToProps = (dispatch) => {
-  const navigate = () => dispatch(toggleNavigation());
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const navigate = () => {
+    dispatch(setCurrent(ownProps.index));
+    dispatch(toggleNavigation());
+  };
   return { navigate };
 };
 

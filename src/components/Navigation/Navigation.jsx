@@ -9,6 +9,7 @@ const NavigationWrapper = styled.div`
 
   visibility: visible;
   transition: visibility 0s, opacity 0.5s linear;
+  overflow:hidden;
 
   position: fixed;
   height: 100%;
@@ -20,13 +21,20 @@ const NavigationWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: black;
-  opacity: 0.95;
   
-  .nav__header {
+  .nav__header, .nav__footer {
    flex-grow: 0;
    flex_shrink: 1;
    background-color: blue;
  }
+
+ .nav__footer {
+   text-align: center;
+   color: white;
+   text-transform: uppercase;
+ }
+
+
 
  .nav__grid{
     flex-grow: 1;
@@ -38,7 +46,7 @@ const NavigationWrapper = styled.div`
       flex-shrink: 1;
       flex-grow: 0;
       color: grey;
-      padding: 0 10px;
+      padding: 0 20px;
       label {
         cursor: pointer;
 
@@ -50,16 +58,19 @@ const NavigationWrapper = styled.div`
     }
 
     .nav__content{
-      background-color: red;
       flex-grow: 1;
       text-align: center;
-    }
+      height: 100%;
+      background-image: url(${props => props.background});
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
  }
 
 `;
 
 export const Navigation = (props) => (
-  <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'}`}>
+  <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'} `} background={props.isOpen ? props.currentImage.images.downsized_large.url : ''}>
     <div className="nav__header">
       <div className="nav__close" onClick={props.close}>Close</div>
     </div>
@@ -67,9 +78,12 @@ export const Navigation = (props) => (
       <div className="nav__sidebar">
         <label>BCK</label>
       </div>
-      <div className="nav__content"><h1>aupa</h1></div>
+      <div className="nav__content" />
       <div className="nav__sidebar">
         <label>FWD</label>
       </div>
+    </div>
+    <div className=" nav__footer">
+      <h3>{props.currentImage.title}</h3>
     </div>
   </NavigationWrapper>);

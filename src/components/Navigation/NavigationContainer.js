@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import { Navigation } from './Navigation';
-import { isNavigating } from '../../store/selectors';
+import { isNavigating, getCurrentImage } from '../../store/selectors';
 import { toggleNavigation } from '../../store/actions';
 
 const mapStateToProps = (state) => {
   const isOpen = isNavigating(state);
-  return { isOpen };
+  const currentImage = getCurrentImage(state) || {};
+  return { isOpen, currentImage };
 };
 
 const mapDispatchToProps = (dispatch) => {
