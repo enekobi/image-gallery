@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft, faAngleRight, faTimesCircle, faPlay } from '@fortawesome/free-solid-svg-icons'
 
 const NavigationWrapper = styled.div`
   &.nav--hidden {
@@ -20,11 +22,29 @@ const NavigationWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: black;
-  
+ 
+  svg {
+    color: grey;
+    cursor: pointer;
+
+    &:hover{
+      color: white;
+    }
+  }
+
   .nav__header, .nav__footer {
    flex-grow: 0;
    flex_shrink: 1;
-   background-color: blue;
+ }
+
+
+ .nav__header{
+   padding: 10px;
+   text-align: end;
+   svg {
+    font-size: 30px;
+    margin: 0 10px;
+   }
  }
 
  .nav__footer {
@@ -41,19 +61,16 @@ const NavigationWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     align-content: center;
+
     .nav__sidebar {
       flex-shrink: 1;
       flex-grow: 0;
       color: grey;
-      padding: 0 20px;
-      label {
-        cursor: pointer;
 
-        &:hover{
-          color: white;
-        }
+      svg {
+        padding: 0 20px;    
+        font-size: 60px;
       }
-      
     }
 
     .nav__content{
@@ -64,22 +81,23 @@ const NavigationWrapper = styled.div`
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
- }
-
+    }
+  }
 `;
 
 export const Navigation = (props) => (
   <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'} `} background={props.isOpen ? props.currentImage.images.downsized_large.url : ''}>
     <div className="nav__header">
-      <div className="nav__close" onClick={props.close}>Close</div>
+      <FontAwesomeIcon icon={faPlay} onClick={props.close} />
+      <FontAwesomeIcon icon={faTimesCircle} onClick={props.close} />
     </div>
     <div className="nav__grid">
       <div className="nav__sidebar">
-        <label onClick={props.previous}>BCK</label>
+        <FontAwesomeIcon icon={faAngleLeft} onClick={props.previous} />
       </div>
       <div className="nav__content" />
       <div className="nav__sidebar">
-        <label onClick={props.next}>FWD</label>
+        <FontAwesomeIcon icon={faAngleRight} onClick={props.next} />
       </div>
     </div>
     <div className=" nav__footer">

@@ -9,4 +9,5 @@
 - useMemo for thumbnails?
 - check autoprefixer configuration
 - review navigation (flex structure, componentization, ...)
+- image popup when click to navigate
 - stop infinite scroll when navigation
