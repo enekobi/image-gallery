@@ -115,7 +115,11 @@ export const Navigation = (props) => {
     props.close();
   };
 
+<<<<<<< HEAD
   const backgroundUrl = props.currentImage?.images?.downsized_large.url;
+=======
+  const backgroundUrl = props.currentImage?.images.downsized_large.url;
+>>>>>>> 619429188872dc1ca201315c859924175cb9082e
 
   return (
     <NavigationWrapper
