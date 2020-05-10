@@ -1,68 +1,145 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# IMAGE GALLERRY
 
-## Available Scripts
+### [**LIVE DEMO**](https://eneko-gallery.netlify.com)
 
-In the project directory, you can run:
+This app is called **Image Gallery** and it has been thought as an exercise to develop a clone of [this mockup](https://tympanus.net/Development/GammaGallery/). The app has to have these features:
 
-### `yarn start`
+- Getting a list of images, it has to show them in a **responsive** grid. Also, this grid needs to be adding **images on chunks** asynchronously, via pagination or infinite scroll.
+- When clicking on a image, this will be **expanded** covering the most it can but without breaking its aspect ratio and responsiveness.
+- When expanded, **navigation controls** will be shown plus another feature to perform a **slideshow** with the loaded images. Of course, the **slideshow can be paused** and the **expanded view closed**.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This stack has been specified for the exercise:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- **React** for rendering.
+- **Styled-Components** for styling.
+- **Hooks** for component internal state.
+- **Redux** for managing centralized state.
+- **Redux-Sagas** for side-effects and ascyn actions.
+- **Reselect** for accessing statae values via memoized selectors;
+- **Jest + Redux-Saga-Test-Plan** for testing sagas.
+- **Jest + React-Testing-Lib** for component testing.
+- **Webpack** fron bundling.
 
-### `yarn test`
+As this is a _small_ app with almost all its components being presentational, **Redux could be skipped** and leverage the use of hooks + ContextApi. Moreover, we could perform all the navigation with React-Router and forget about managing indexes in the state. But as said, the **objective was to use the stack mentioned above**, as it is the one which is evaluated.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The deadline taken for this exercise has been 48h, so **prioritizing** tasks has been mandatory. Sadly, some other tasks has been put off and had been written down in the TODOs point to be approached in further iterations.
 
-### `yarn build`
+## Taken approach
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The app is based in React and Redux. The main folder here is `./src`.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```JavaScript // I know it's not JS but only to mark the comments in green ;-)
+IMAGE-GALLERY\SRC
+├───components        // React components
+│   ├───Gallery
+│   ├───Grid
+│   ├───LoadMore
+│   ├───Navigation
+│   ├───styles        // style breakpoints and theme
+│   ├───Thumbnail
+│   └───Title
+├───store             // Redux store, sagas and selectors
+└───tests             // some tests
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Components
 
-### `yarn eject`
+Most components are connected to the store, except **Grid** and **Title**, which are merely presentational. It would be nice to follow the **Atomic Design** approach to keep a good componentization but time was on the essence, and I chose to have an MVP and refactor it later.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+If I would have to choose between all the components, I would remark these, because they **make use of hooks and Redux** to perform effectively:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **LoadMore**. A component using the _intersectionObserver_ and the one in charge of the **infinite-scroll**. Once it detects it has entered the layout, it will **launch the logic to perform a request** to load another chunk of images. For older browser that don't support the intersectionObserver, it will render a button for the user to click it and request images.
+- **Navigation**. It is the component showing the image in a larger scale, with navigation controls and slideshow option. Due to lack of time, I have not been able to build it as clean as I wanted so it has ended being quite a big component which would need some componentization. It **combines props from Redux, hooks for controlling the internal state and the slideshow plus some complex-er styling**.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Store
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```JavaScript
+IMAGE-GALLERY\SRC\STORE
+├── actions.js
+├── fetchImagesSaga.js  // saga for fetching images
+├── reducer.js
+├── selectors.js
+└── store.js            // initializes the store
+```
 
-## Learn More
+Here lays the store with its main logic. It has the usual actions + reducers. Only a couple of peculiarities:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **FetchImagesSaga**. This saga is used to fetch images from the API. It will build the enpoint based on environment variables and, after getting the new chunk, it will _dispatch_ and action to store them in the state.
+- **Selectors**. I always use selectors for accessing values from the state directly, mainly for reusability. These here, have been built up using **Reselect**, which brings us the ability to **compose selectors** with another selectors, and also it **memoizes** them putting a simple cache layer in front, not to calculate the same value two times in a row.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Tests
 
-### Code Splitting
+```JavaScript
+IMAGE-GALLERY\SRC\TESTS
+├── fetchImagesSaga.spec.js  // jest + redux-saga-test-plan
+└── Navigation.spec.js       // jest + react-testing-library
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+As I firmly believe in the value of tests, I wanted to introduce some testing to the project. Sadly, 48h are not a big deal so I haven't have the time to test the app propperly but I have written these two testcases as an example. I chose to test a Saga and a React Component because I thought that they are the most different from a regular JavaScript test and request another effort of abstraction to think about the way of testing them.
 
-### Analyzing the Bundle Size
+- I chose **redux-saga-test-plan** because I believe testing sagas is **harder** than the usual JavaScript functions and, despite being this the one I have the most experience for testing sagas, this library gives a quite **straightforward and understandable API** once the basics are understood.
+- For components, **react-testing-library** has become the **standard over Enzyme**. Whilst Enzyme was about testing the code inside the component, react-testing-lib **cares about testing the component the way the user would interact with it**. Being this more appropriate for a frontend logic.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## How to install and run locally
 
-### Making a Progressive Web App
+You can play with it in the [live demo](https://eneko-gallery.netlify.app) but if you wan to run it locally, these are the needed steps. This app has been developed with `node v10.15.0` and `yarn v1.19.1`, so take them into consideration when running this project.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+1. Clone the project.
+   ```
+   git clone https://github.com/enekobi/image-gallery.git
+   ```
+2. Go to project folder and install the dependencies.
+   ```
+   yarn install
+   ```
+3. Start the development build + the server
 
-### Advanced Configuration
+   ```
+   yarn start
+   ```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+   If everything goes fine, the console will prompt you this message and you'll be able to access the app in http://localhost:3000
 
-### Deployment
+   ```
+   Compiled successfully!
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+   You can now view image-gallery in the browser.
 
-### `yarn build` fails to minify
+   Local:            http://localhost:3000
+   On Your Network:  http://10.0.75.1:3000
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+   Note that the development build is not optimized.
+   To create a production build, use yarn build.
+   ```
+
+## Play with it
+
+The app performs request to the Giphy API and will show you gifs which are trendy in the momment. To test the app you could:
+
+- **Scroll down** to fire the **infinite-scroll**.
+- **Resize** the image grid to test its **responsiveness**.
+- **Click on a thumbnail** to trigger the **navigation** view.
+- Also **resize** to check the **large-image responsiveness**.
+- Navigate **clicking the arrows**.
+  - Going next in the last image, will lead you to the first on the list and viceversa.
+- **Play/Stop** a slideshow (slides will be changing each 1500ms).
+- **Click** to **close** the nagivation.
+
+## Conclusions, TODOs and future work
+
+Developing this types of apps is fun, specially when the result is so visual and the technology stack is the one you like. As I only had 2 days to develop it, I have not been able to implement all the ideas and use all the tools I wanted, but at least I have written them down here for future work:
+
+- I have not had the time to **divide into different components/styles** all the logic that occurs in the _Navigation.jsx_. Speccially a parametrized Button component for the controls, close, slider,...
+- The **images request maybe could be improved** to request less data. The giphy api give us a lot of options so maybe we could ask for lighter images on the grid to **improve loading times**, specially on mobile networks.
+- As this project has been scafolded with Create-React-App, there is probably some unused logic and files that could be **cleaned**.
+- As we use Styled-Components for styling, **Postcss dependency has been removed**. I would check a bit deeper all the effects to see the CSS is the most optimized we can.
+- The **theme and the styled-system** could more and better used.
+- **SEO** could be improved with **React-Helmet**.
+- Some **typechecking** could be introduced, specially for props, using React-PropTypes or even TypeScript.
+- **Stop scroll** and infinite-scroll when on navigation view.
+- The **import paths are quite long and verbose**. I would introduce path-aliases and index.js entrypoint on the folders to improve these.
+- Continue improving **testing**.
+
+I think that's it. I hope you find this app interesting and if you need anything more from me, you can find me in [enekobi.eus](https://enekobi.eus).
+
+Thanks for reading.

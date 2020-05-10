@@ -107,7 +107,7 @@ export const Navigation = (props) => {
         next();
       }, 1500);
     }
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // For sanitizing
   }, [sliding, next]);
 
   const cleanAndClose = () => {
