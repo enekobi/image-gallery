@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft, faAngleRight, faTimesCircle, faPlay, faPauseCircle } from '@fortawesome/free-solid-svg-icons'
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faTimesCircle,
+  faPlay,
+  faPauseCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const NavigationWrapper = styled.div`
   &.nav--hidden {
@@ -22,40 +28,38 @@ const NavigationWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: black;
- 
+
   svg {
     color: grey;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       color: white;
     }
   }
 
-  .nav__header, .nav__footer {
-   flex-grow: 0;
-   flex_shrink: 1;
- }
+  .nav__header,
+  .nav__footer {
+    flex-grow: 0;
+    flex_shrink: 1;
+  }
 
+  .nav__header {
+    padding: 10px;
+    align-self: flex-end;
+    svg {
+      font-size: 30px;
+      margin: 0 10px;
+    }
+  }
 
- .nav__header{
-   padding: 10px;
-   align-self: flex-end;
-   svg {
-    font-size: 30px;
-    margin: 0 10px;
-   }
- }
+  .nav__footer {
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+  }
 
- .nav__footer {
-   text-align: center;
-   color: white;
-   text-transform: uppercase;
- }
-
-
-
- .nav__grid{
+  .nav__grid {
     flex-grow: 1;
     display: flex;
     flex-direction: row;
@@ -68,11 +72,11 @@ const NavigationWrapper = styled.div`
       color: grey;
 
       svg {
-        padding: 0 20px;    
+        padding: 0 20px;
         font-size: 60px;
       }
 
-      &--hidden{
+      &--hidden {
         opacity: 0;
         visibility: hidden;
       }
@@ -80,11 +84,11 @@ const NavigationWrapper = styled.div`
       transition: visibility 0s, opacity 0.5s linear;
     }
 
-    .nav__content{
+    .nav__content {
       flex-grow: 1;
       text-align: center;
       height: 100%;
-      background-image: url(${props => props.background});
+      background-image: url(${(props) => props.background});
       background-repeat: no-repeat;
       background-size: contain;
       background-position: center;
@@ -104,32 +108,51 @@ export const Navigation = (props) => {
       }, 1500);
     }
     return () => clearInterval(interval);
-  }, [sliding, next])
-
+  }, [sliding, next]);
 
   const cleanAndClose = () => {
     setSliding(false);
     props.close();
-  }
+  };
 
-  const backgroundUrl = props.currentImage.images.downsized_large.url;
+  const backgroundUrl = props.currentImage?.images.downsized_large.url;
 
-  return <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'} `} background={props.isOpen ? backgroundUrl : ''}>
-    <div className="nav__header">
-      <FontAwesomeIcon icon={sliding ? faPauseCircle : faPlay} onClick={() => setSliding(!sliding)} data-testid="slider" />
-      <FontAwesomeIcon icon={faTimesCircle} onClick={cleanAndClose} data-testid="close" />
-    </div>
-    <div className="nav__grid">
-      <div className={`nav__sidebar${sliding ? '--hidden' : ''}`}>
-        <FontAwesomeIcon icon={faAngleLeft} onClick={props.previous} data-testid="prev" />
+  return (
+    <NavigationWrapper
+      className={`nav${props.isOpen ? "" : "--hidden"} `}
+      background={props.isOpen ? backgroundUrl : ""}>
+      <div className="nav__header">
+        <FontAwesomeIcon
+          icon={sliding ? faPauseCircle : faPlay}
+          onClick={() => setSliding(!sliding)}
+          data-testid="slider"
+        />
+        <FontAwesomeIcon
+          icon={faTimesCircle}
+          onClick={cleanAndClose}
+          data-testid="close"
+        />
       </div>
-      <div className="nav__content" data-testid="content" />
-      <div className={`nav__sidebar${sliding ? '--hidden' : ''}`}>
-        <FontAwesomeIcon icon={faAngleRight} onClick={props.next} data-testid="next" />
+      <div className="nav__grid">
+        <div className={`nav__sidebar${sliding ? "--hidden" : ""}`}>
+          <FontAwesomeIcon
+            icon={faAngleLeft}
+            onClick={props.previous}
+            data-testid="prev"
+          />
+        </div>
+        <div className="nav__content" data-testid="content" />
+        <div className={`nav__sidebar${sliding ? "--hidden" : ""}`}>
+          <FontAwesomeIcon
+            icon={faAngleRight}
+            onClick={props.next}
+            data-testid="next"
+          />
+        </div>
       </div>
-    </div>
-    <div className=" nav__footer">
-      <h3>{props.currentImage.title}</h3>
-    </div>
-  </NavigationWrapper>;
-}
+      <div className=" nav__footer">
+        <h3>{props.currentImage.title}</h3>
+      </div>
+    </NavigationWrapper>
+  );
+};
