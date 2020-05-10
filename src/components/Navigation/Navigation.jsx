@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft, faAngleRight, faTimesCircle, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faAngleLeft, faAngleRight, faTimesCircle, faPlay, faPauseCircle } from '@fortawesome/free-solid-svg-icons'
 
 const NavigationWrapper = styled.div`
   &.nav--hidden {
@@ -71,6 +71,13 @@ const NavigationWrapper = styled.div`
         padding: 0 20px;    
         font-size: 60px;
       }
+
+      &--hidden{
+        opacity: 0;
+        visibility: hidden;
+      }
+      visibility: visible;
+      transition: visibility 0s, opacity 0.5s linear;
     }
 
     .nav__content{
@@ -85,22 +92,43 @@ const NavigationWrapper = styled.div`
   }
 `;
 
-export const Navigation = (props) => (
-  <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'} `} background={props.isOpen ? props.currentImage.images.downsized_large.url : ''}>
+export const Navigation = (props) => {
+  const [sliding, setSliding] = useState(false);
+  const { next } = props; // Just to add it as a dependency to useEffect
+
+  useEffect(() => {
+    let interval;
+    if (sliding) {
+      interval = setInterval(() => {
+        next();
+      }, 1500);
+    }
+    return () => clearInterval(interval);
+  }, [sliding, next])
+
+
+  const cleanAndClose = () => {
+    setSliding(false);
+    props.close();
+  }
+
+
+  return <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'} `} background={props.isOpen ? props.currentImage.images.downsized_large.url : ''}>
     <div className="nav__header">
-      <FontAwesomeIcon icon={faPlay} onClick={props.close} />
-      <FontAwesomeIcon icon={faTimesCircle} onClick={props.close} />
+      <FontAwesomeIcon icon={sliding ? faPauseCircle : faPlay} onClick={() => setSliding(!sliding)} />
+      <FontAwesomeIcon icon={faTimesCircle} onClick={cleanAndClose} />
     </div>
     <div className="nav__grid">
-      <div className="nav__sidebar">
+      <div className={`nav__sidebar${sliding ? '--hidden' : ''}`}>
         <FontAwesomeIcon icon={faAngleLeft} onClick={props.previous} />
       </div>
       <div className="nav__content" />
-      <div className="nav__sidebar">
+      <div className={`nav__sidebar${sliding ? '--hidden' : ''}`}>
         <FontAwesomeIcon icon={faAngleRight} onClick={props.next} />
       </div>
     </div>
     <div className=" nav__footer">
       <h3>{props.currentImage.title}</h3>
     </div>
-  </NavigationWrapper>);
+  </NavigationWrapper>;
+}
