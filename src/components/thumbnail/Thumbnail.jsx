@@ -27,6 +27,7 @@ const ImageWrapper = styled.div`
     transition: 1s ease;
   
     label {
+      text-transform: uppercase;
       justify-self: center;
       align-self: center;
     }
@@ -45,7 +46,7 @@ export const Thumbnail = (props) => (
   <ImageWrapper>
     <img className="thumbnail" src={props.src} loading="lazy" alt={props.title} />
     <div className="thumbnail__title">
-      <label>{props.title.toUpperCase()}</label>
+      <label>{props.title}</label>
     </div>
   </ImageWrapper>
 );
