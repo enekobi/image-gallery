@@ -112,19 +112,20 @@ export const Navigation = (props) => {
     props.close();
   }
 
+  const backgroundUrl = props.currentImage.images.downsized_large.url;
 
-  return <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'} `} background={props.isOpen ? props.currentImage.images.downsized_large.url : ''}>
+  return <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'} `} background={props.isOpen ? backgroundUrl : ''}>
     <div className="nav__header">
-      <FontAwesomeIcon icon={sliding ? faPauseCircle : faPlay} onClick={() => setSliding(!sliding)} />
-      <FontAwesomeIcon icon={faTimesCircle} onClick={cleanAndClose} />
+      <FontAwesomeIcon icon={sliding ? faPauseCircle : faPlay} onClick={() => setSliding(!sliding)} data-testid="slider" />
+      <FontAwesomeIcon icon={faTimesCircle} onClick={cleanAndClose} data-testid="close" />
     </div>
     <div className="nav__grid">
       <div className={`nav__sidebar${sliding ? '--hidden' : ''}`}>
-        <FontAwesomeIcon icon={faAngleLeft} onClick={props.previous} />
+        <FontAwesomeIcon icon={faAngleLeft} onClick={props.previous} data-testid="prev" />
       </div>
-      <div className="nav__content" />
+      <div className="nav__content" data-testid="content" />
       <div className={`nav__sidebar${sliding ? '--hidden' : ''}`}>
-        <FontAwesomeIcon icon={faAngleRight} onClick={props.next} />
+        <FontAwesomeIcon icon={faAngleRight} onClick={props.next} data-testid="next" />
       </div>
     </div>
     <div className=" nav__footer">
