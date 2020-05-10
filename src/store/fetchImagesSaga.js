@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { takeLatest, put, call } from 'redux-saga/effects';
 import { FETCH_IMAGES, storeImages } from './actions';
 import xhr from 'xhr';
