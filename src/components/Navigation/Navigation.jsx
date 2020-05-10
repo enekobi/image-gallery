@@ -9,7 +9,6 @@ const NavigationWrapper = styled.div`
 
   visibility: visible;
   transition: visibility 0s, opacity 0.5s linear;
-  overflow:hidden;
 
   position: fixed;
   height: 100%;
@@ -76,11 +75,11 @@ export const Navigation = (props) => (
     </div>
     <div className="nav__grid">
       <div className="nav__sidebar">
-        <label>BCK</label>
+        <label onClick={props.previous}>BCK</label>
       </div>
       <div className="nav__content" />
       <div className="nav__sidebar">
-        <label>FWD</label>
+        <label onClick={props.next}>FWD</label>
       </div>
     </div>
     <div className=" nav__footer">

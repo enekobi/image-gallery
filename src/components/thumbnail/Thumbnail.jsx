@@ -5,7 +5,8 @@ const ImageWrapper = styled.div`
   display: inline-block; // workaround for IE11 responsiveness
   margin: 5px;
   position: relative;
-
+  cursor: pointer;
+  
   .thumbnail {
     height: 100%;
     width: 100%;
@@ -24,7 +25,7 @@ const ImageWrapper = styled.div`
     width: 95%;
     
     opacity: 0;    
-    transition: 1s ease;
+    transition: 0.6s ease;
   
     label {
       text-transform: uppercase;

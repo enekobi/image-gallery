@@ -1,4 +1,10 @@
-import { STORE_IMAGES, SET_CURRENT, TOGGLE_NAGIVATION } from './actions';
+import {
+  STORE_IMAGES,
+  SET_CURRENT,
+  TOGGLE_NAGIVATION,
+  GO_FORWARD,
+  GO_BACK
+} from './actions';
 
 const storeImages = (state, newImages) => ({
   ...state,
@@ -15,6 +21,22 @@ const toggleNavigation = (state) => ({
   navigation: !state.navigation
 });
 
+const goForward = (state) => {
+  const newIndex = state.current + 1;
+  return {
+    ...state,
+    current: newIndex === state.images.length ? 0 : newIndex
+  };
+};
+
+const goBack = (state) => {
+  const newIndex = state.current - 1;
+  return {
+    ...state,
+    current: newIndex < 0 ? state.images.length - 1 : newIndex
+  };
+};
+
 export const reducer = (state, action) => {
   const actualState = state || {
     images: [],
@@ -29,6 +51,10 @@ export const reducer = (state, action) => {
       return setCurrent(actualState, action.payload);
     case TOGGLE_NAGIVATION:
       return toggleNavigation(actualState);
+    case GO_FORWARD:
+      return goForward(actualState);
+    case GO_BACK:
+      return goBack(actualState);
     default:
       console.warn('[Store]: unhandled action', action);
       return actualState;

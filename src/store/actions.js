@@ -17,3 +17,9 @@ export const setCurrent = makeActionCreator(SET_CURRENT, 'payload');
 
 export const TOGGLE_NAGIVATION = 'toggle-navigation';
 export const toggleNavigation = makeActionCreator(TOGGLE_NAGIVATION);
+
+export const GO_FORWARD = 'go-forward';
+export const goForward = makeActionCreator(GO_FORWARD);
+
+export const GO_BACK = 'go-back';
+export const goBack = makeActionCreator(GO_BACK);
