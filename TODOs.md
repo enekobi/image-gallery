@@ -8,3 +8,4 @@
 - Improve paths (index entry-points, aliases, ...)
 - useMemo for thumbnails?
 - check autoprefixer configuration
+- review navigation (flex structure, componentization, ...)
