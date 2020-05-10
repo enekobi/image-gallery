@@ -43,7 +43,7 @@ const ImageWrapper = styled.div`
 
 
 export const Thumbnail = (props) => (
-  <ImageWrapper>
+  <ImageWrapper onClick={props.navigate}>
     <img className="thumbnail" src={props.src} loading="lazy" alt={props.title} />
     <div className="thumbnail__title">
       <label>{props.title}</label>

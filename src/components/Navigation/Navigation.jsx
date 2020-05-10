@@ -2,6 +2,15 @@ import React from 'react';
 import styled from 'styled-components'
 
 const NavigationWrapper = styled.div`
+  &.nav--hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  visibility: visible;
+
+  transition: visibility 0s, opacity 0.5s linear;
+
   position: fixed;
   height: 100%;
   width: 100%;
@@ -13,7 +22,7 @@ const NavigationWrapper = styled.div`
   flex-direction: column;
   background-color: black;
   opacity: 0.95;
-
+  
   .nav__header {
    flex-grow: 0;
    flex_shrink: 1;
@@ -51,7 +60,7 @@ const NavigationWrapper = styled.div`
 `;
 
 export const Navigation = (props) => (
-  <NavigationWrapper>
+  <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'}`}>
     <div className="nav__header">header</div>
     <div className="nav__grid">
       <div className="nav__sidebar">
@@ -62,5 +71,4 @@ export const Navigation = (props) => (
         <label>FWD</label>
       </div>
     </div>
-  </NavigationWrapper>
-);
+  </NavigationWrapper>);

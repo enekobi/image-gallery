@@ -12,14 +12,14 @@ const setCurrent = (state, newCurrent) => ({
 
 const toggleNavigation = (state) => ({
   ...state,
-  nagigation: !state.navigation
+  navigation: !state.navigation
 });
 
 export const reducer = (state, action) => {
   const actualState = state || {
     images: [],
     current: -1,
-    nagivation: false
+    navigation: false
   };
 
   switch (action.type) {

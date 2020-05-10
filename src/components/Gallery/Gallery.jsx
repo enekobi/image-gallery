@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { Thumbnail } from '../Thumbnail/Thumbnail';
+import { ThumbnailContainer } from '../Thumbnail/ThumbnailContainer';
 import { Title } from '../Title/Title';
 import { Grid } from '../Grid/Grid';
 import { LoadMoreContainer } from '../LoadMore/LoadMoreContainer';
@@ -36,7 +36,7 @@ export const Gallery = (props) => {
       <Grid className="page__content">
         {props.images.map((itemProps, index) => {
           const src = itemProps.images.fixed_width.url;
-          return <Thumbnail src={src} key={index} {...itemProps} />
+          return <ThumbnailContainer src={src} key={index} {...itemProps} />
         })}
       </Grid>
       <LoadMoreContainer />

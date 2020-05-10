@@ -4,7 +4,7 @@ export const getImages = (state) => state.images;
 
 export const getCurrentIndex = (state) => state.current;
 
-export const isNavigating = (state) => state.nagivation;
+export const isNavigating = (state) => state.navigation;
 
 // Examples of how can selectors can be conposed by other selectors using reselect
 export const getTotalImages = createSelector(getImages, (images) => images.length);

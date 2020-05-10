@@ -15,5 +15,5 @@ export const storeImages = makeActionCreator(STORE_IMAGES, 'payload');
 export const SET_CURRENT = 'set-current';
 export const setCurrent = makeActionCreator(SET_CURRENT, 'payload');
 
-export const TOGGLE_NAGIVATION = 'SET-CURRENT';
-export const toggleNavigation = makeActionCreator(SET_CURRENT);
+export const TOGGLE_NAGIVATION = 'toggle-navigation';
+export const toggleNavigation = makeActionCreator(TOGGLE_NAGIVATION);
