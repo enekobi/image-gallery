@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import { reducer } from './reducer';
-import { fetchImages } from './fetchImagesSaga';
+import { fetchImagesSaga } from './fetchImagesSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -12,7 +12,7 @@ const getStore = () => {
     composeWithDevTools(applyMiddleware(sagaMiddleware))
   );
 
-  sagaMiddleware.run(fetchImages);
+  sagaMiddleware.run(fetchImagesSaga);
   return store;
 };
 
