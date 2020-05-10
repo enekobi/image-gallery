@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Thumbnail } from '../Thumbnail/Thumbnail';
 import { Title } from '../Title/Title';
 import { Grid } from '../Grid/Grid';
+import { LoadMoreContainer } from '../LoadMore/LoadMoreContainer';
 
 const GalleryWrapper = styled.div`
 display: grid;
@@ -24,14 +25,8 @@ justify-items: center;
 }
 `;
 
-export const Gallery = (props) => {
-  const items = Array.from(Array(20).keys()).map((_) => (
-    {
-      title: "neure titulua",
-      src: "https://media.giphy.com/media/NvgkEvycaWhPi/giphy.gif"
-    }
-  ));
 
+export const Gallery = (props) => {
   return <GalleryWrapper>
     <div className="page__container">
       <Title className="page__title"
@@ -39,8 +34,12 @@ export const Gallery = (props) => {
         sub="A responsive image gallery experiment"
       />
       <Grid className="page__content">
-        {items.map((itemProps, index) => <Thumbnail {...itemProps} key={index} />)}
+        {props.images.map((itemProps, index) => {
+          const src = itemProps.images.fixed_width.url;
+          return <Thumbnail src={src} key={index} {...itemProps} />
+        })}
       </Grid>
+      <LoadMoreContainer />
     </div>
   </GalleryWrapper>;
 }

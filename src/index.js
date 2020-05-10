@@ -3,16 +3,15 @@ import 'react-app-polyfill/stable';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-
+import { Provider } from 'react-redux';
 import { store } from './store/store';
-import { fetchImages } from './store/actions';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-store.dispatch(fetchImages());

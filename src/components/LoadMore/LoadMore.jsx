@@ -16,29 +16,31 @@ const Button = styled.div`
   background-color: #555;
   }
 
-  // &.--hidden {
-  //   opacity:0;
-  // }
+  &.--hidden {
+    opacity:0;
+  }
 `;
 
 const observerAvailable = 'IntersectionObserver' in window;
 
-export const LoadMore = (props) => {
+export const LoadMore = ({ fetch }) => {
   const buttonRef = useRef();
-  const fetchImages = () => console.log("Fetching");
 
   useEffect(() => {
     if (!observerAvailable) {
+      fetch();
       return;
     }
 
     const observer = new IntersectionObserver(entries => {
       if (entries[0].intersectionRatio <= 0) return;
-      fetchImages();
+      fetch();
     });
+
     observer.observe(buttonRef.current);
-  }, []);
+
+  }, [fetch]);
 
 
-  return <Button className={observerAvailable ? '--hidden' : ''} ref={buttonRef}>Example for loading more items...</Button>
+  return <Button className={observerAvailable ? '--hidden' : ''} ref={buttonRef} onClick={fetch}>Example for loading more items...</Button>
 };
