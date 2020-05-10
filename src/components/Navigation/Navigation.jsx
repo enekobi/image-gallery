@@ -8,7 +8,6 @@ const NavigationWrapper = styled.div`
   }
 
   visibility: visible;
-
   transition: visibility 0s, opacity 0.5s linear;
 
   position: fixed;
@@ -61,7 +60,9 @@ const NavigationWrapper = styled.div`
 
 export const Navigation = (props) => (
   <NavigationWrapper className={`nav${props.isOpen ? '' : '--hidden'}`}>
-    <div className="nav__header">header</div>
+    <div className="nav__header">
+      <div className="nav__close" onClick={props.close}>Close</div>
+    </div>
     <div className="nav__grid">
       <div className="nav__sidebar">
         <label>BCK</label>
