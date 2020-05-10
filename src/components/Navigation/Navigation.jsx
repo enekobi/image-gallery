@@ -40,7 +40,7 @@ const NavigationWrapper = styled.div`
 
  .nav__header{
    padding: 10px;
-   text-align: end;
+   align-self: flex-end;
    svg {
     font-size: 30px;
     margin: 0 10px;
