@@ -1,4 +1,4 @@
-# IMAGE GALLERRY
+# IMAGE GALLERY
 
 ### [**LIVE DEMO**](https://eneko-gallery.netlify.com)
 
